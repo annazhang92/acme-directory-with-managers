@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>Employee and Jobs</h1>
+        <form method='POST' action='/employees'>
+            <input name ='email' placeholder='email'/>
+            <select name='jobId'>
+                    <option value='-1'>none</option>
+                    {% for job in jobs %}
+                    <option value ='{{ job.id }}'>{{job.name}}</option>
+                    {% endfor %}
+            </select>
+
+            <select name='managerId'>
+                    <option value='-1'>none</option>
+                    {% for employee in employees %}
+                    <option value ='{{ employee.id}}'>{{employee.email}}</option>
+                    {% endfor %}
+            </select>
+
+            <button>Create Employee</button>
+
+        </form>
+        
+
+        <ul>
+        {% for employee in employees %}
+        <form method="POST" action='/employees/{{employee.id}}?_method=PATCH'>
+        <li>
+            <input name='email' value='{{employee.email}}'>
+            <br>
+            Email Provider: {{employee.emailProvider}}
+            <br>
+            Name:{{employee.name}}
+            <br>
+            Job:{{employee.job.name}}
+            <br>
+            She/He manages: {{employee.whoImanage}}
+            <br>
+            Manager: {{employee.manager.email}}
+            <br>
+            <select name='managerId'>
+                    {% for employee in employees %}
+                    <option value ='{{ employee.id}}'>{{employee.email}}</option>
+                    {% endfor %}
+            </select>
+            <br>
+        </li>
+        <button>Update</button>
+        </form>
+        {% endfor %}
+        </ul>
+    </body>
+
+
+</html>
